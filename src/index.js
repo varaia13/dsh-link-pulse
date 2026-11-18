@@ -106,7 +106,6 @@ export function loadDynamicProviders() {
     providerMap[providerId] = item
   }
 
-  // е¦‚жћњжњЄй…ЌзЅ®е®ж–№ deepseekпј€DSH е†…зЅ®е®ж–№и·Їз”±зљ„ provider id дёє deepseek-officialпј‰пјЊиЎҐе……дЅњдёєз‹¬з«‹е®ж–№жЋўжµ‹иЉ‚з‚№
   if (!providerMap['deepseek-official']) {
     const dsItem = {
       id: 'deepseek-official',
@@ -128,8 +127,6 @@ export function loadDynamicProviders() {
 }
 
 /**
- * жµ‹й‡Џ Keep-Alive зЉ¶жЂЃдё‹зљ„зњџе®ћеЌ•ж¬Ў RTT еѕЂиї”е»¶иїџ
- * (ењЁе·Іе»єз«‹зљ„еЉ еЇ† socket дёЉеЏ‘йЂЃ HEAD е№¶жµ‹й‡Џй¦–е­—иЉ‚иї”е›ћиЂ—ж—¶)
  */
 export async function probeLatency(url) {
   if (!url || !/^https?:\/\//i.test(url)) {

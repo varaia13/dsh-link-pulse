@@ -1,4 +1,4 @@
-﻿﻿window.__ModuleLoader__.load({
+﻿window.__ModuleLoader__.load({
   id: 'dsh-link-pulse',
   factory: (require) => {
     const module = { exports: {} }
@@ -64,7 +64,6 @@
       whiteSpace: 'nowrap',
     }
 
-    // ---------- е…Ёе±ЂеЌ•дѕ‹е…±дє«зЉ¶жЂЃпј€зЅ‘з»ње»¶иїџж•°жЌ®пј‰ ----------
     const store = {
       state: {
         data: null,
@@ -109,12 +108,10 @@
     }
 
     function formatModelShortName(modelId) {
-      // е±•з¤єе®Њж•ґзљ„ provider-owned model IDпјЊдёЌеЃљ GPT/Gemini/Claude з­‰з®Ђз§°ж е°„гЂ‚
       return modelId || 'Auto'
     }
 
     /**
-     * жќѓеЁЃе®ћж—¶жЉ“еЏ–пјљз›ґжЋҐд»Ћ DSH е®ж–№ sessions дёЋ modelDirectories жњЌеЉЎи®ўй…еЅ“е‰Ќж­ЈењЁеЇ№иЇќзљ„жЁЎећ‹дёЋдѕ›еє”е•†
      */
     function useCurrentActiveModel(defaultConfig) {
       const [selection, setSelection] = useState(() => ({
@@ -122,7 +119,6 @@
         model: defaultConfig?.model || '',
       }))
 
-      // еђЋз«ЇзЉ¶жЂЃеј‚ж­Ґе€°иѕѕж—¶пјЊз”Ёе®ћй™…й…ЌзЅ®иЎҐйЅђе€ќе§‹йЂ‰ж‹©пј›дёЌе†ЌзЎ¬зј–з Ѓ CPA/GeminiгЂ‚
       useEffect(() => {
         if (!defaultConfig?.provider || !defaultConfig?.model) return
         setSelection((current) => current?.provider && current?.model ? current : {
@@ -142,12 +138,10 @@
         let observedSessionId = null
 
         const getCurrentSessionId = (sessions) => {
-          // uiSession жЇ DSH е®ж–№вЂњдё»и§†е›ѕеЅ“е‰ЌдјљиЇќвЂќзЉ¶жЂЃжєђпј›е…¶ current еї«з…§зљ„ key дёє SessionIdгЂ‚
           const uiSession = getUiSession()
           const uiSnapshot = uiSession?.current?.getSnapshot?.()
           if (uiSnapshot?.key) return uiSnapshot.key
 
-          // е…је®№жІЎжњ‰ uiSession зљ„е®їдё»пјљйЂ‰ж‹©еЅ“е‰Ќд»Ќз”± mainView дїќз•™зљ„дјљиЇќгЂ‚
           const list = sessions?.list?.getSnapshot?.()
           const byId = list?.byId || {}
           return Object.values(byId).find((item) => (item?.retainedBy?.mainView || 0) > 0)?.id || null
@@ -229,7 +223,6 @@
           const found = data.providers.find((p) => p.id === pId)
           if (found) return found
         }
-        // жњЄиЇ†е€«зљ„ providerпјље±•з¤єе…¶зњџе®ћ idпјЊз»ќдёЌе†’еђЌйЎ¶ж›їе€—иЎЁдё­зљ„з¬¬дёЂдёЄдѕ›еє”е•†
         return { id: pId, name: String(pId).toUpperCase(), baseURL: '', probe: null }
       }, [data, activeSelection.provider])
 
@@ -430,7 +423,6 @@
           const found = data.providers.find((p) => p.id === pId)
           if (found) return found
         }
-        // жњЄиЇ†е€«зљ„ providerпјље±•з¤єе…¶зњџе®ћ idпјЊз»ќдёЌе†’еђЌйЎ¶ж›їе€—иЎЁдё­зљ„з¬¬дёЂдёЄдѕ›еє”е•†
         return { id: pId, name: String(pId).toUpperCase(), baseURL: '', probe: null }
       }, [data, activeSelection.provider])
 
