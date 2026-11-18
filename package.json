@@ -1,6 +1,6 @@
 {
   "name": "dsh-link-pulse",
-  "version": "0.1.12",
+  "version": "0.1.12-ru.1",
   "description": "Dynamic LLM provider gateway latency and health pulse probe for DeepSeek Harness",
   "type": "module",
   "license": "Apache-2.0",
