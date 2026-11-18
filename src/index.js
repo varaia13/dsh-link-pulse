@@ -1,4 +1,4 @@
-import path from 'node:path'
+﻿import path from 'node:path'
 import os from 'node:os'
 import fs from 'node:fs'
 import tls from 'node:tls'
@@ -10,11 +10,11 @@ export const inject = ['webServer']
 
 const KNOWN_PROVIDER_DEFAULTS = {
   deepseek: {
-    name: 'DeepSeek 官方',
+    name: 'DeepSeek \u0028\u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0439\u0029',
     baseURL: 'https://api.deepseek.com',
   },
   'deepseek-official': {
-    name: 'DeepSeek 官方',
+    name: 'DeepSeek \u0028\u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0439\u0029',
     baseURL: 'https://api.deepseek.com',
   },
   'opencode-go': {
@@ -22,11 +22,11 @@ const KNOWN_PROVIDER_DEFAULTS = {
     baseURL: 'https://opencode.ai',
   },
   openai: {
-    name: 'OpenAI 官方',
+    name: 'OpenAI \u0028\u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0439\u0029',
     baseURL: 'https://api.openai.com',
   },
   anthropic: {
-    name: 'Anthropic 官方',
+    name: 'Anthropic \u0028\u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0439\u0029',
     baseURL: 'https://api.anthropic.com',
   },
   google: {
@@ -48,6 +48,7 @@ const yamlSchema = jsYaml.DEFAULT_SCHEMA.extend([jsType])
 function getCandidateConfigPaths() {
   const dshHome = process.env.DSH_HOME || path.join(os.homedir(), '.dsh')
   return [
+    path.join(dshHome, 'profiles/desktop/cordis.patch.yml'),
     path.join(dshHome, 'profiles/web/cordis.patch.yml'),
     path.join(dshHome, 'settings.yaml'),
     path.join(dshHome, 'cordis.patch.yml'),
@@ -105,11 +106,11 @@ export function loadDynamicProviders() {
     providerMap[providerId] = item
   }
 
-  // 如果未配置官方 deepseek（DSH 内置官方路由的 provider id 为 deepseek-official），补充作为独立官方探测节点
+  // е¦‚жћњжњЄй…ЌзЅ®е®ж–№ deepseekпј€DSH е†…зЅ®е®ж–№и·Їз”±зљ„ provider id дёє deepseek-officialпј‰пјЊиЎҐе……дЅњдёєз‹¬з«‹е®ж–№жЋўжµ‹иЉ‚з‚№
   if (!providerMap['deepseek-official']) {
     const dsItem = {
       id: 'deepseek-official',
-      name: 'DeepSeek 官方',
+      name: 'DeepSeek \u0028\u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0439\u0029',
       baseURL: 'https://api.deepseek.com',
       api: 'deepseek-native',
       models: ['deepseek-v4-flash', 'deepseek-v4-pro'],
@@ -127,12 +128,12 @@ export function loadDynamicProviders() {
 }
 
 /**
- * 测量 Keep-Alive 状态下的真实单次 RTT 往返延迟
- * (在已建立的加密 socket 上发送 HEAD 并测量首字节返回耗时)
+ * жµ‹й‡Џ Keep-Alive зЉ¶жЂЃдё‹зљ„зњџе®ћеЌ•ж¬Ў RTT еѕЂиї”е»¶иїџ
+ * (ењЁе·Іе»єз«‹зљ„еЉ еЇ† socket дёЉеЏ‘йЂЃ HEAD е№¶жµ‹й‡Џй¦–е­—иЉ‚иї”е›ћиЂ—ж—¶)
  */
 export async function probeLatency(url) {
   if (!url || !/^https?:\/\//i.test(url)) {
-    return { latencyMs: -1, status: 'no_url', quality: 'offline', error: '无有效网络地址' }
+    return { latencyMs: -1, status: 'no_url', quality: 'offline', error: '\u041D\u0435\u0442 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0433\u043E URL' }
   }
 
   return new Promise((resolve) => {
@@ -140,7 +141,7 @@ export async function probeLatency(url) {
     try {
       parsed = new URL(url)
     } catch {
-      return resolve({ latencyMs: -1, quality: 'error', reachable: false, error: 'URL 格式错误' })
+      return resolve({ latencyMs: -1, quality: 'error', reachable: false, error: '\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 URL' })
     }
 
     const host = parsed.hostname
@@ -161,7 +162,7 @@ export async function probeLatency(url) {
 
     timer = setTimeout(() => {
       cleanup()
-      resolve({ latencyMs: 3500, quality: 'timeout', reachable: false, error: '请求超时 (>3.5s)' })
+      resolve({ latencyMs: 3500, quality: 'timeout', reachable: false, error: '\u0442\u0430\u0439\u043C\u0430\u0443\u0442 (>3.5s)' })
     }, timeout)
 
     try {
@@ -208,7 +209,7 @@ export async function probeLatency(url) {
           latencyMs: -1,
           quality: 'error',
           reachable: false,
-          error: err.message || '连接失败',
+          error: err.message || '\u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C',
         })
       })
 
@@ -218,7 +219,7 @@ export async function probeLatency(url) {
           latencyMs: 3500,
           quality: 'timeout',
           reachable: false,
-          error: '连接超时',
+          error: '\u0442\u0430\u0439\u043C\u0430\u0443\u0442 \u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F',
         })
       })
     } catch (err) {
@@ -227,7 +228,7 @@ export async function probeLatency(url) {
         latencyMs: -1,
         quality: 'error',
         reachable: false,
-        error: err.message || '连接异常',
+        error: err.message || '\u043E\u0448\u0438\u0431\u043A\u0430 \u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F',
       })
     }
   })

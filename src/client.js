@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({
+﻿﻿window.__ModuleLoader__.load({
   id: 'dsh-link-pulse',
   factory: (require) => {
     const module = { exports: {} }
@@ -64,7 +64,7 @@ window.__ModuleLoader__.load({
       whiteSpace: 'nowrap',
     }
 
-    // ---------- 全局单例共享状态（网络延迟数据） ----------
+    // ---------- е…Ёе±ЂеЌ•дѕ‹е…±дє«зЉ¶жЂЃпј€зЅ‘з»ње»¶иїџж•°жЌ®пј‰ ----------
     const store = {
       state: {
         data: null,
@@ -109,12 +109,12 @@ window.__ModuleLoader__.load({
     }
 
     function formatModelShortName(modelId) {
-      // 展示完整的 provider-owned model ID，不做 GPT/Gemini/Claude 等简称映射。
+      // е±•з¤єе®Њж•ґзљ„ provider-owned model IDпјЊдёЌеЃљ GPT/Gemini/Claude з­‰з®Ђз§°ж е°„гЂ‚
       return modelId || 'Auto'
     }
 
     /**
-     * 权威实时抓取：直接从 DSH 官方 sessions 与 modelDirectories 服务订阅当前正在对话的模型与供应商
+     * жќѓеЁЃе®ћж—¶жЉ“еЏ–пјљз›ґжЋҐд»Ћ DSH е®ж–№ sessions дёЋ modelDirectories жњЌеЉЎи®ўй…еЅ“е‰Ќж­ЈењЁеЇ№иЇќзљ„жЁЎећ‹дёЋдѕ›еє”е•†
      */
     function useCurrentActiveModel(defaultConfig) {
       const [selection, setSelection] = useState(() => ({
@@ -122,7 +122,7 @@ window.__ModuleLoader__.load({
         model: defaultConfig?.model || '',
       }))
 
-      // 后端状态异步到达时，用实际配置补齐初始选择；不再硬编码 CPA/Gemini。
+      // еђЋз«ЇзЉ¶жЂЃеј‚ж­Ґе€°иѕѕж—¶пјЊз”Ёе®ћй™…й…ЌзЅ®иЎҐйЅђе€ќе§‹йЂ‰ж‹©пј›дёЌе†ЌзЎ¬зј–з Ѓ CPA/GeminiгЂ‚
       useEffect(() => {
         if (!defaultConfig?.provider || !defaultConfig?.model) return
         setSelection((current) => current?.provider && current?.model ? current : {
@@ -142,12 +142,12 @@ window.__ModuleLoader__.load({
         let observedSessionId = null
 
         const getCurrentSessionId = (sessions) => {
-          // uiSession 是 DSH 官方“主视图当前会话”状态源；其 current 快照的 key 为 SessionId。
+          // uiSession жЇ DSH е®ж–№вЂњдё»и§†е›ѕеЅ“е‰ЌдјљиЇќвЂќзЉ¶жЂЃжєђпј›е…¶ current еї«з…§зљ„ key дёє SessionIdгЂ‚
           const uiSession = getUiSession()
           const uiSnapshot = uiSession?.current?.getSnapshot?.()
           if (uiSnapshot?.key) return uiSnapshot.key
 
-          // 兼容没有 uiSession 的宿主：选择当前仍由 mainView 保留的会话。
+          // е…је®№жІЎжњ‰ uiSession зљ„е®їдё»пјљйЂ‰ж‹©еЅ“е‰Ќд»Ќз”± mainView дїќз•™зљ„дјљиЇќгЂ‚
           const list = sessions?.list?.getSnapshot?.()
           const byId = list?.byId || {}
           return Object.values(byId).find((item) => (item?.retainedBy?.mainView || 0) > 0)?.id || null
@@ -229,7 +229,7 @@ window.__ModuleLoader__.load({
           const found = data.providers.find((p) => p.id === pId)
           if (found) return found
         }
-        // 未识别的 provider：展示其真实 id，绝不冒名顶替列表中的第一个供应商
+        // жњЄиЇ†е€«зљ„ providerпјље±•з¤єе…¶зњџе®ћ idпјЊз»ќдёЌе†’еђЌйЎ¶ж›їе€—иЎЁдё­зљ„з¬¬дёЂдёЄдѕ›еє”е•†
         return { id: pId, name: String(pId).toUpperCase(), baseURL: '', probe: null }
       }, [data, activeSelection.provider])
 
@@ -253,7 +253,7 @@ window.__ModuleLoader__.load({
       const segments = [
         { text: providerDisplayName, color: T.label, bold: true },
         { text: modelShortName, color: T.secondary },
-        { text: currentLatency > 0 ? `${currentLatency}ms` : '探测中', color: statusColor, bold: true },
+        { text: currentLatency > 0 ? `${currentLatency}ms` : '\u0437\u0430\u0434\u0435\u0440\u0436\u043A\u0430', color: statusColor, bold: true },
       ]
 
       const node = h(
@@ -346,8 +346,8 @@ window.__ModuleLoader__.load({
               fontFamily: 'system-ui, -apple-system, sans-serif',
             },
           },
-          h('div', { style: { fontWeight: 600, fontSize: '12px', marginBottom: 4 } }, `🎯 ${activeSelection.model}`),
-          h('div', { style: { color: T.secondary } }, `🏢 ${providerDisplayName}`),
+          h('div', { style: { fontWeight: 600, fontSize: '12px', marginBottom: 4 } }, `\u{1F3AF} ${activeSelection.model}`),
+          h('div', { style: { color: T.secondary } }, `\u{1F3E2} ${providerDisplayName}`),
           h(
             'div',
             {
@@ -358,7 +358,7 @@ window.__ModuleLoader__.load({
                 marginBottom: otherProviders.length > 0 ? 6 : 0,
               },
             },
-            `⚡ ${currentLatency > 0 ? currentLatency + ' ms' : '检测中'}`,
+            `\u26A1 ${currentLatency > 0 ? currentLatency + ' ms' : '\u0437\u0430\u0434\u0435\u0440\u0436\u043A\u0430'}`,
           ),
           otherProviders.length > 0 &&
             h(
@@ -370,7 +370,7 @@ window.__ModuleLoader__.load({
                   color: T.secondary,
                 },
               },
-              '🌐 其它 Provider 链路',
+              '\u{1F310} \u0414\u0440\u0443\u0433\u0438\u0435 \u043A\u0430\u043D\u0430\u043B\u044B Provider',
             ),
           otherProviders.map((p, i) =>
             h(
@@ -403,7 +403,7 @@ window.__ModuleLoader__.load({
                     fontWeight: 600,
                   },
                 },
-                p.probe?.latencyMs > 0 ? `${p.probe.latencyMs} ms` : '离线',
+                p.probe?.latencyMs > 0 ? `${p.probe.latencyMs} ms` : '\u043E\u0444\u043B\u0430\u0439\u043D',
               ),
             ),
           ),
@@ -430,7 +430,7 @@ window.__ModuleLoader__.load({
           const found = data.providers.find((p) => p.id === pId)
           if (found) return found
         }
-        // 未识别的 provider：展示其真实 id，绝不冒名顶替列表中的第一个供应商
+        // жњЄиЇ†е€«зљ„ providerпјље±•з¤єе…¶зњџе®ћ idпјЊз»ќдёЌе†’еђЌйЎ¶ж›їе€—иЎЁдё­зљ„з¬¬дёЂдёЄдѕ›еє”е•†
         return { id: pId, name: String(pId).toUpperCase(), baseURL: '', probe: null }
       }, [data, activeSelection.provider])
 
@@ -490,15 +490,15 @@ window.__ModuleLoader__.load({
             h(
               'div',
               { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
-              h('span', { style: { fontSize: '20px' } }, '📡'),
+              h('span', { style: { fontSize: '20px' } }, '\u{1F4E1}'),
               h(
                 'div',
                 null,
-                h('div', { style: { fontSize: '15px', fontWeight: 600 } }, '模型链路与上游延迟脉搏'),
+                h('div', { style: { fontSize: '15px', fontWeight: 600 } }, '\u041C\u043E\u0441\u0442 \u043C\u043E\u0434\u0435\u043B\u0435\u0439 \u0438 \u0437\u0430\u0434\u0435\u0440\u0436\u043A\u0430'),
                 h(
                   'div',
                   { style: { fontSize: '11px', color: T.secondary } },
-                  '实时订阅当前对话供应商与模型状态',
+                  '\u0416\u0438\u0432\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0430: \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0438 \u043C\u043E\u0434\u0435\u043B\u0438',
                 ),
               ),
             ),
@@ -525,7 +525,7 @@ window.__ModuleLoader__.load({
                     cursor: 'pointer',
                   },
                 },
-                loading ? h('span', { className: 'pulse-spin' }, '⚡') : '⚡ 立即测速',
+                loading ? h('span', { className: 'pulse-spin' }, '\u26A1') : '\u26A1 \u0417\u0430\u043C\u0435\u0440',
               ),
               h(
                 'button',
@@ -542,7 +542,7 @@ window.__ModuleLoader__.load({
                     cursor: 'pointer',
                   },
                 },
-                '✕',
+                '\u2715',
               ),
             ),
           ),
@@ -593,7 +593,7 @@ window.__ModuleLoader__.load({
                         fontWeight: 600,
                       },
                     },
-                    `供应商: ${providerDisplayName}`,
+                    `\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440: ${providerDisplayName}`,
                   ),
                 ),
                 h(
@@ -605,13 +605,13 @@ window.__ModuleLoader__.load({
                       color: statusColor,
                     },
                   },
-                  currentLatency > 0 ? `${currentLatency} ms` : '检测中',
+                  currentLatency > 0 ? `${currentLatency} ms` : '\u0437\u0430\u0434\u0435\u0440\u0436\u043A\u0430',
                 ),
               ),
               h(
                 'div',
                 { style: { fontSize: '11px', color: T.secondary, wordBreak: 'break-all' } },
-                `网关端点: ${activeProviderInfo?.baseURL || '系统内置直连通道'}`,
+                `\u041A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0442\u043E\u0447\u043A\u0430 \u0448\u043B\u044E\u0437\u0430: ${activeProviderInfo?.baseURL || '\u0432\u0441\u0442\u0440\u043E\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u044F\u043C\u043E\u0439 \u043A\u0430\u043D\u0430\u043B'}`,
               ),
             ),
             h(
@@ -634,7 +634,7 @@ window.__ModuleLoader__.load({
                     marginBottom: '10px',
                   },
                 },
-                '🌐 其它可用 Provider 链路测速',
+                '\u{1F310} \u0414\u0440\u0443\u0433\u0438\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 Provider-\u043A\u0430\u043D\u0430\u043B\u044B',
               ),
               (() => {
                 if (otherProviders.length === 0) {
@@ -648,7 +648,7 @@ window.__ModuleLoader__.load({
                         padding: '12px 0',
                       },
                     },
-                    '暂无其它已接入的 Provider',
+                    '\u041D\u0435\u0442 \u0434\u0440\u0443\u0433\u0438\u0445 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D\u043D\u044B\u0445 Provider',
                   )
                 }
 
@@ -686,7 +686,7 @@ window.__ModuleLoader__.load({
                         h(
                           'div',
                           { style: { fontSize: '10px', color: T.secondary, marginTop: '2px' } },
-                          p.baseURL || '官方内置通道',
+                          p.baseURL || '\u0412\u0441\u0442\u0440\u043E\u0435\u043D\u043D\u044B\u0439 \u043A\u0430\u043D\u0430\u043B',
                         ),
                       ),
                       h(
@@ -695,12 +695,12 @@ window.__ModuleLoader__.load({
                         h(
                           'div',
                           { style: { fontWeight: 700, fontSize: '13px', color: col } },
-                          lat > 0 ? `${lat} ms` : '超时/离线',
+                          lat > 0 ? `${lat} ms` : '\u0442\u0430\u0439\u043C\u0430\u0443\u0442/\u043E\u0444\u043B\u0430\u0439\u043D',
                         ),
                         h(
                           'div',
                           { style: { fontSize: '9px', color: T.secondary } },
-                          lat > 0 ? (lat < 200 ? '极佳' : '良好') : '不可达',
+                          lat > 0 ? (lat < 200 ? '\u043E\u0442\u043B\u0438\u0447\u043D\u043E' : '\u0445\u043E\u0440\u043E\u0448\u043E') : '\u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0435\u043D',
                         ),
                       ),
                     )
